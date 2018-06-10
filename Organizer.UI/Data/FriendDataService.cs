@@ -24,5 +24,12 @@ namespace Organizer.UI.Data
             return await _organizerDbContext.Friends.AsNoTracking().SingleAsync(f => f.Id == friendId);
             
         }
+
+        public async Task SaveAsync(Friend friend)
+        {
+            _organizerDbContext.Friends.Attach(friend);
+           _organizerDbContext.Entry(friend).State = EntityState.Modified;
+            await _organizerDbContext.SaveChangesAsync();
+        }
     }
 }

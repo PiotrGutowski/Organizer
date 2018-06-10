@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Event\AfterFriendSaveEvent.cs" />
     <Compile Include="Event\OpenFriendDetailViewEvent.cs" />
     <Compile Include="IFriendLookupDataService.cs" />
     <Compile Include="LookupDataService.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="ViewModel\IFriendDetailViewModel.cs" />
     <Compile Include="ViewModel\INavigationViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NavigationItemViewModel.cs" />
     <Compile Include="ViewModel\NavigationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\FriendDetailView.xaml.cs">
