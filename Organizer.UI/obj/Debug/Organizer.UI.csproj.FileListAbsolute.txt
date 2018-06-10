@@ -30,3 +30,5 @@ c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\GeneratedInternalT
 c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\NavigationView.baml
 c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FriendDetailView.g.cs
 c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FriendDetailView.baml
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\Prism.dll
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\Prism.xml
