@@ -1,0 +1,6 @@
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\bin\Debug\Organizer.Model.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\bin\Debug\Organizer.Model.pdb
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\obj\Debug\Organizer.Model.csprojAssemblyReference.cache
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\obj\Debug\Organizer.Model.csproj.CoreCompileInputs.cache
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\obj\Debug\Organizer.Model.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.Model\obj\Debug\Organizer.Model.pdb

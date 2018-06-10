@@ -1,0 +1,16 @@
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\Organizer.DataAccess.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\Organizer.DataAccess.pdb
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\Organizer.Model.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\Organizer.Model.pdb
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csprojAssemblyReference.cache
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csproj.CoreCompileInputs.cache
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csproj.CopyComplete
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.pdb
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\Organizer.DataAccess.dll.config
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFramework.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFramework.xml
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.Initial.resources
+c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csproj.GenerateResource.cache
