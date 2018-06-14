@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Organizer.Model;
 
-namespace Organizer.UI
+namespace Organizer.UI.Data.Lookups
 {
     public interface IFriendLookupDataService
     {

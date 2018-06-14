@@ -1,40 +1,37 @@
-﻿using Organizer.Model;
-using Organizer.UI.Data;
-using Organizer.UI.Event;
+﻿using Organizer.UI.Event;
+using Organizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Organizer.UI.Data.Repositories;
 
 namespace Organizer.UI.ViewModel
 {
-   public class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
+    public class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
-        private readonly IFriendDataService _dataService;
+        private readonly IFriendRepository _dataService;
         private readonly IEventAggregator _eventAggregator;
+        private FriendWrapper _friend;
+        private bool _hasChanges;
 
-        public FriendDetailViewModel(IFriendDataService dataService, IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendRepository dataService, IEventAggregator eventAggregator)
         {
             _dataService = dataService;
             _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-                .Subscribe(OnOpenFriendDetailView);
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
         private bool OnSaveCanExecute()
         {
-            return true;
+            return Friend != null && !Friend.HasErrors && HasChanges;
         }
 
         private async void OnSaveExecute()
         {
-            await _dataService.SaveAsync(Friend);
+            await _dataService.SaveAsync();
+            HasChanges = _dataService.HasChanges();
             _eventAggregator.GetEvent<AfterFriendSaveEvent>().Publish(
                 new AfterFriendSaveEventArgs
                 {
@@ -43,25 +40,49 @@ namespace Organizer.UI.ViewModel
                 });
         }
 
-        private async void OnOpenFriendDetailView(int friendId)
-        {
-            await LoadAsync(friendId);
-        }
-
         public async Task LoadAsync(int friendId)
         {
-            Friend = await _dataService.GetByIdAsync(friendId);
+            var friend = await _dataService.GetByIdAsync(friendId);
+
+            Friend = new FriendWrapper(friend);
+
+            Friend.PropertyChanged += (s, e) =>
+                {
+                    if (!HasChanges)
+                    {
+                        HasChanges = _dataService.HasChanges();
+                    }
+                    if (e.PropertyName == nameof(Friend.HasErrors))
+                    {
+                        ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                    }
+                };
+
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
-        private Friend _friend;
-
-        public Friend Friend
+        public FriendWrapper Friend
         {
             get { return _friend; }
             private set
             {
                 _friend = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public bool HasChanges
+        {
+            get { return _hasChanges; }
+            set
+            {
+                if (_hasChanges != value)
+                {
+                    _hasChanges = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+
+                }
             }
         }
 

@@ -69,8 +69,8 @@
     </ApplicationDefinition>
     <Compile Include="Event\AfterFriendSaveEvent.cs" />
     <Compile Include="Event\OpenFriendDetailViewEvent.cs" />
-    <Compile Include="IFriendLookupDataService.cs" />
-    <Compile Include="LookupDataService.cs" />
+    <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
+    <Compile Include="Data\Lookups\LookupDataService.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModel\FriendDetailViewModel.cs" />
     <Compile Include="ViewModel\IFriendDetailViewModel.cs" />
@@ -85,6 +85,11 @@
     <Compile Include="View\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Services\IMessageDialogService.cs" />
+    <Compile Include="View\Services\MessageDialogService.cs" />
+    <Compile Include="Wrapper\FriendWrapper.cs" />
+    <Compile Include="Wrapper\ModelWrapper.cs" />
+    <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,8 +98,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\FriendDataService.cs" />
-    <Compile Include="Data\IFriendDataService.cs" />
+    <Compile Include="Data\Repositories\FriendRepository.cs" />
+    <Compile Include="Data\Repositories\IFriendRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -133,7 +138,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Organizer.DataAccess\Organizer.DataAccess.csproj">

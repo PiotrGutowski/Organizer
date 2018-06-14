@@ -32,3 +32,4 @@ c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FriendDetailV
 c:\users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FriendDetailView.baml
 C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\Prism.dll
 C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\Prism.xml
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\App.baml

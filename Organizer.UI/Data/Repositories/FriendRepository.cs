@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Organizer.UI.Data
+namespace Organizer.UI.Data.Repositories
 {
-   public class FriendDataService : IFriendDataService
+   public class FriendRepository : IFriendRepository
     {
         private readonly OrganizerDbContext _organizerDbContext;
-        public FriendDataService(OrganizerDbContext organizerDbContext)
+        public FriendRepository(OrganizerDbContext organizerDbContext)
         {
             _organizerDbContext = organizerDbContext;
         }
@@ -20,15 +20,18 @@ namespace Organizer.UI.Data
         public async Task<Friend>GetByIdAsync(int friendId)
         {
 
-
-            return await _organizerDbContext.Friends.AsNoTracking().SingleAsync(f => f.Id == friendId);
+            return await _organizerDbContext.Friends.SingleAsync(f => f.Id == friendId);
             
         }
 
-        public async Task SaveAsync(Friend friend)
+        public bool HasChanges()
         {
-            _organizerDbContext.Friends.Attach(friend);
-           _organizerDbContext.Entry(friend).State = EntityState.Modified;
+            return _organizerDbContext.ChangeTracker.HasChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+        
             await _organizerDbContext.SaveChangesAsync();
         }
     }
