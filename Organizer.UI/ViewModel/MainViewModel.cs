@@ -2,6 +2,7 @@
 using Organizer.UI.Data;
 using Organizer.UI.Event;
 using Organizer.UI.View.Services;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Organizer.UI.ViewModel
 {
@@ -36,17 +38,34 @@ namespace Organizer.UI.ViewModel
 
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
                .Subscribe(OnOpenFriendDetailView);
+            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Subscribe(AfterFriendDeleted);
+
+            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
 
             NavigationViewModel = navigationViewModel;
         }
 
+       
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
 
         }
 
-        private async void OnOpenFriendDetailView(int friendId)
+        public IFriendDetailViewModel FriendDetailViewModel
+        {
+            get { return _friendDetailViewModel; }
+            private set
+            {
+                _friendDetailViewModel = value;
+                OnPropertyChanged();
+            }
+
+        }
+
+        public ICommand CreateNewFriendCommand { get; }
+
+        private async void OnOpenFriendDetailView(int? friendId)
         {
             if(FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
             {
@@ -62,14 +81,18 @@ namespace Organizer.UI.ViewModel
            
         }
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        private void AfterFriendDeleted(int friendId)
         {
-            get { return _friendDetailViewModel; }
-            private set { _friendDetailViewModel = value;
-                OnPropertyChanged();
-            }
-
+            FriendDetailViewModel = null;
         }
+
+        private void OnCreateNewFriendExecute()
+        {
+            OnOpenFriendDetailView(null);
+        }
+
+
+        
     }
 }
 

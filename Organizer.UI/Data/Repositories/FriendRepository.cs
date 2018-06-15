@@ -17,6 +17,12 @@ namespace Organizer.UI.Data.Repositories
             _organizerDbContext = organizerDbContext;
         }
 
+        public void Add(Friend friend)
+        {
+            _organizerDbContext.Friends.Add(friend);
+
+        }
+
         public async Task<Friend>GetByIdAsync(int friendId)
         {
 
@@ -27,6 +33,11 @@ namespace Organizer.UI.Data.Repositories
         public bool HasChanges()
         {
             return _organizerDbContext.ChangeTracker.HasChanges();
+        }
+
+        public void Remove(Friend model)
+        {
+            _organizerDbContext.Friends.Remove(model);
         }
 
         public async Task SaveAsync()

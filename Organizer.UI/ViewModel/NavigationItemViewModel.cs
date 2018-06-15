@@ -24,8 +24,6 @@ namespace Organizer.UI.ViewModel
 
         }
 
-        
-
         public int Id { get; }
 
         public string DisplayMember

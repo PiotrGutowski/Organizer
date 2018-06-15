@@ -5,6 +5,9 @@ using Prism.Events;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Organizer.UI.Data.Repositories;
+using Organizer.Model;
+using System;
+using Organizer.UI.View.Services;
 
 namespace Organizer.UI.ViewModel
 {
@@ -12,37 +15,26 @@ namespace Organizer.UI.ViewModel
     {
         private readonly IFriendRepository _dataService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMessageDialogService _messageDialogService;
         private FriendWrapper _friend;
         private bool _hasChanges;
 
-        public FriendDetailViewModel(IFriendRepository dataService, IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendRepository dataService,
+            IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             _dataService = dataService;
             _eventAggregator = eventAggregator;
+            _messageDialogService = messageDialogService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
-        private bool OnSaveCanExecute()
-        {
-            return Friend != null && !Friend.HasErrors && HasChanges;
-        }
 
-        private async void OnSaveExecute()
+        public async Task LoadAsync(int? friendId)
         {
-            await _dataService.SaveAsync();
-            HasChanges = _dataService.HasChanges();
-            _eventAggregator.GetEvent<AfterFriendSaveEvent>().Publish(
-                new AfterFriendSaveEventArgs
-                {
-                    Id = Friend.Id,
-                    DisplayMember = $"{Friend.FirstName} {Friend.LastName}"
-                });
-        }
-
-        public async Task LoadAsync(int friendId)
-        {
-            var friend = await _dataService.GetByIdAsync(friendId);
+            var friend = friendId.HasValue
+                 ? await _dataService.GetByIdAsync(friendId.Value) : CreateNewFriend();
 
             Friend = new FriendWrapper(friend);
 
@@ -59,7 +51,12 @@ namespace Organizer.UI.ViewModel
                 };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Friend.Id == 0)
+            {
+                Friend.FirstName = ""; 
+            }
         }
+
 
         public FriendWrapper Friend
         {
@@ -87,5 +84,44 @@ namespace Organizer.UI.ViewModel
         }
 
         public ICommand SaveCommand { get; }
+
+        public ICommand DeleteCommand { get; }
+
+        private bool OnSaveCanExecute()
+        {
+            return Friend != null && !Friend.HasErrors && HasChanges;
+        }
+
+        private async void OnSaveExecute()
+        {
+            await _dataService.SaveAsync();
+            HasChanges = _dataService.HasChanges();
+            _eventAggregator.GetEvent<AfterFriendSaveEvent>().Publish(
+                new AfterFriendSaveEventArgs
+                {
+                    Id = Friend.Id,
+                    DisplayMember = $"{Friend.FirstName} {Friend.LastName}"
+                });
+        }
+
+
+        private Friend CreateNewFriend()
+        {
+            var friend = new Friend();
+            _dataService.Add(friend);
+            return friend;
+        }
+
+        private async void OnDeleteExecute()
+        {
+            var result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete {Friend.FirstName} {Friend.LastName}", "Question");
+            if(result == MessageDialogResult.OK)
+            {
+                _dataService.Remove(Friend.Model);
+                await _dataService.SaveAsync();
+                _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            }
+            
+        }
     }
 }
