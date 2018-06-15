@@ -14,3 +14,5 @@ c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFram
 c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.Initial.resources
 c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csproj.GenerateResource.cache
+C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMusicGenre.resources
+C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMusicGenreFix.resources

@@ -17,6 +17,7 @@ namespace Organizer.DataAccess
         }
 
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<FavoriteMusicGenre> FavoriteMusicGenre { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

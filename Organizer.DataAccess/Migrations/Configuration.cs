@@ -26,6 +26,16 @@ namespace Organizer.DataAccess.Migrations
                 new Friend { FirstName = "John", LastName = "Rambo" },
                  new Friend { FirstName = "Adam", LastName = "Mickiewicz" }
                 );
+            context.FavoriteMusicGenre.AddOrUpdate(
+                h => h.Name,
+                new FavoriteMusicGenre { Name = "Rock" },
+                new FavoriteMusicGenre { Name = "HeavyMetal" },
+                new FavoriteMusicGenre { Name = "HardCore" },
+                new FavoriteMusicGenre { Name = "Disco" },
+                new FavoriteMusicGenre { Name = "RAP" },
+                new FavoriteMusicGenre { Name = "Classic" }
+                );
+
         }
     }
 }

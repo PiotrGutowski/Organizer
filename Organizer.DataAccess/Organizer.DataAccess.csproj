@@ -52,6 +52,14 @@
     <Compile Include="Migrations\201806081830097_Initial.Designer.cs">
       <DependentUpon>201806081830097_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806150800271_AddedMusicGenre.cs" />
+    <Compile Include="Migrations\201806150800271_AddedMusicGenre.Designer.cs">
+      <DependentUpon>201806150800271_AddedMusicGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806150803127_AddedMusicGenreFix.cs" />
+    <Compile Include="Migrations\201806150803127_AddedMusicGenreFix.Designer.cs">
+      <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrganizerDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +77,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806081830097_Initial.resx">
       <DependentUpon>201806081830097_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806150800271_AddedMusicGenre.resx">
+      <DependentUpon>201806150800271_AddedMusicGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806150803127_AddedMusicGenreFix.resx">
+      <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

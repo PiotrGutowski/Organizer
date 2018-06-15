@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Lookups\IMusicGenreLookupDataService.cs" />
     <Compile Include="Event\AfterFriendDeletedEvent.cs" />
     <Compile Include="Event\AfterFriendSaveEvent.cs" />
     <Compile Include="Event\OpenFriendDetailViewEvent.cs" />

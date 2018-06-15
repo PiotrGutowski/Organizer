@@ -21,6 +21,12 @@ namespace Organizer.Model
         [StringLength(50)]
         [EmailAddress]
         public string Email { get; set; }
+
+        public int? FavoriteMusicGenreId { get; set; }
+
+        public FavoriteMusicGenre FavoriteMusicGenre { get; set; }
+
+
     }
 }
  

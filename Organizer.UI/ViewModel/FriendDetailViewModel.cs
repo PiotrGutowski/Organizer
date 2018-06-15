@@ -8,6 +8,8 @@ using Organizer.UI.Data.Repositories;
 using Organizer.Model;
 using System;
 using Organizer.UI.View.Services;
+using Organizer.UI.Data.Lookups;
+using System.Collections.ObjectModel;
 
 namespace Organizer.UI.ViewModel
 {
@@ -16,18 +18,23 @@ namespace Organizer.UI.ViewModel
         private readonly IFriendRepository _dataService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
+        private readonly IMusicGenreLookupDataService _musicGenreLookupDataService;
         private FriendWrapper _friend;
         private bool _hasChanges;
 
         public FriendDetailViewModel(IFriendRepository dataService,
-            IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
+            IEventAggregator eventAggregator, IMessageDialogService messageDialogService,
+            IMusicGenreLookupDataService musicGenreLookupDataService)
         {
             _dataService = dataService;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
+            _musicGenreLookupDataService = musicGenreLookupDataService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+
+            MusicGenre = new ObservableCollection<LookupItem>();
         }
 
 
@@ -36,27 +43,44 @@ namespace Organizer.UI.ViewModel
             var friend = friendId.HasValue
                  ? await _dataService.GetByIdAsync(friendId.Value) : CreateNewFriend();
 
+            InitializeFriend(friend);
+
+            await LodaMusicGenreAsync();
+        }
+
+        private void InitializeFriend(Friend friend)
+        {
             Friend = new FriendWrapper(friend);
 
             Friend.PropertyChanged += (s, e) =>
+            {
+                if (!HasChanges)
                 {
-                    if (!HasChanges)
-                    {
-                        HasChanges = _dataService.HasChanges();
-                    }
-                    if (e.PropertyName == nameof(Friend.HasErrors))
-                    {
-                        ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-                    }
-                };
+                    HasChanges = _dataService.HasChanges();
+                }
+                if (e.PropertyName == nameof(Friend.HasErrors))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             if (Friend.Id == 0)
             {
-                Friend.FirstName = ""; 
+                Friend.FirstName = "";
             }
         }
 
+        private async Task LodaMusicGenreAsync()
+        {
+            MusicGenre.Clear();
+            MusicGenre.Add(new NullLookupItem { DisplayMember = " - " });
+            var lookup = await _musicGenreLookupDataService.GetMusicGenreLookupAsync();
+            foreach (var item in lookup)
+            {
+                MusicGenre.Add(item);
+            }
+        }
 
         public FriendWrapper Friend
         {
@@ -86,6 +110,8 @@ namespace Organizer.UI.ViewModel
         public ICommand SaveCommand { get; }
 
         public ICommand DeleteCommand { get; }
+
+        public ObservableCollection<LookupItem> MusicGenre { get;  }
 
         private bool OnSaveCanExecute()
         {
