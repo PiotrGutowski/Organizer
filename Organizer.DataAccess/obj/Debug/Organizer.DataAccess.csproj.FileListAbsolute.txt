@@ -16,3 +16,6 @@ c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.
 c:\users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.csproj.GenerateResource.cache
 C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMusicGenre.resources
 C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMusicGenreFix.resources
+C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedPhone.resources
+C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMeeting.resources
+C:\Users\pigut2\source\repos\Organizer\Organizer.DataAccess\obj\Debug\Organizer.DataAccess.Migrations.AddedMeetingWithFriends.resources

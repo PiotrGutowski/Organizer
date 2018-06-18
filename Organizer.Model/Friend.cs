@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,12 @@ namespace Organizer.Model
 {
     public class Friend
     {
+        public Friend()
+        {
+            PhoneNumbers = new Collection<FriendPhoneNumber>();
+            Meetings = new Collection<Meeting>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -25,6 +32,10 @@ namespace Organizer.Model
         public int? FavoriteMusicGenreId { get; set; }
 
         public FavoriteMusicGenre FavoriteMusicGenre { get; set; }
+
+        public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
+
+        public ICollection<Meeting> Meetings { get; set; }
 
 
     }

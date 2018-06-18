@@ -9,41 +9,29 @@ using System.Threading.Tasks;
 
 namespace Organizer.UI.Data.Repositories
 {
-   public class FriendRepository : IFriendRepository
+
+    public class FriendRepository : GenericRepository<Friend, OrganizerDbContext>,
+                                    IFriendRepository
     {
-        private readonly OrganizerDbContext _organizerDbContext;
-        public FriendRepository(OrganizerDbContext organizerDbContext)
+        
+        public FriendRepository(OrganizerDbContext organizerDbContext): base(organizerDbContext)
         {
-            _organizerDbContext = organizerDbContext;
-        }
-
-        public void Add(Friend friend)
-        {
-            _organizerDbContext.Friends.Add(friend);
-
-        }
-
-        public async Task<Friend>GetByIdAsync(int friendId)
-        {
-
-            return await _organizerDbContext.Friends.SingleAsync(f => f.Id == friendId);
             
         }
 
-        public bool HasChanges()
+        public override async Task<Friend>GetByIdAsync(int friendId)
         {
-            return _organizerDbContext.ChangeTracker.HasChanges();
+
+            return await Context.Friends.Include(p=>p.PhoneNumbers)
+                .SingleAsync(f => f.Id == friendId);
+            
         }
 
-        public void Remove(Friend model)
+    
+        public void RemovePhoneNumber(FriendPhoneNumber model)
         {
-            _organizerDbContext.Friends.Remove(model);
+           Context.FriendPhoneNumbers.Remove(model);
         }
 
-        public async Task SaveAsync()
-        {
-        
-            await _organizerDbContext.SaveChangesAsync();
-        }
     }
 }

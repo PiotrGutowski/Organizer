@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Organizer.UI.Data.Lookups
 {
-    public class LookupDataService : IFriendLookupDataService, IMusicGenreLookupDataService
+    public class LookupDataService : IFriendLookupDataService, IMusicGenreLookupDataService, IMeetingLookupDataService
     {
         private readonly OrganizerDbContext _organizerDbContext;
         public LookupDataService(OrganizerDbContext organizerDbContext)
@@ -40,6 +40,18 @@ namespace Organizer.UI.Data.Lookups
                      ).ToListAsync();
 
         }
+        public async Task<IEnumerable<LookupItem>> GetMeetingLookupAsync()
+        {
+            return await _organizerDbContext.Meetings.AsNoTracking()
+                 .Select(f => new LookupItem
+                 {
+                     Id = f.Id,
+                     DisplayMember = f.Title
+                 }
+                     ).ToListAsync();
+            
+        }
+
 
     }
 }

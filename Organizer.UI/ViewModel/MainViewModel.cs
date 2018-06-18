@@ -1,4 +1,5 @@
-﻿using Organizer.Model;
+﻿using Autofac.Features.Indexed;
+using Organizer.Model;
 using Organizer.UI.Data;
 using Organizer.UI.Event;
 using Organizer.UI.View.Services;
@@ -17,30 +18,33 @@ namespace Organizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
+
 
         public  INavigationViewModel NavigationViewModel { get; }
 
         private readonly IEventAggregator _eventAggregator;
 
-        private IFriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
 
         private readonly IMessageDialogService _messageDialogService;
-
+        private readonly IIndex<string, IDetailViewModel> _detailViewModelCreator;
 
         public MainViewModel(INavigationViewModel navigationViewModel
-            , Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator
-            ,IMessageDialogService messageDialogService)
+            , IIndex<string, IDetailViewModel> detailViewModelCreator, IEventAggregator eventAggregator
+            
+            , IMessageDialogService messageDialogService)
         {
             _messageDialogService = messageDialogService;
-            _friendDetailViewModelCreator = friendDetailViewModelCreator;
+            _detailViewModelCreator = detailViewModelCreator;
+       
             _eventAggregator = eventAggregator;
 
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-               .Subscribe(OnOpenFriendDetailView);
-            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Subscribe(AfterFriendDeleted);
+            _eventAggregator.GetEvent<OpenDetailViewEvent>()
+               .Subscribe(OnOpenDetailView);
+            _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
+                .Subscribe(AfterDetailDeleted);
 
-            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
+            CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
 
             NavigationViewModel = navigationViewModel;
         }
@@ -52,22 +56,22 @@ namespace Organizer.UI.ViewModel
 
         }
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
-            get { return _friendDetailViewModel; }
+            get { return _detailViewModel; }
             private set
             {
-                _friendDetailViewModel = value;
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
 
         }
 
-        public ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewDetailCommand { get; }
 
-        private async void OnOpenFriendDetailView(int? friendId)
+        private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
-            if(FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
+            if(DetailViewModel!=null && DetailViewModel.HasChanges)
             {
                var result = _messageDialogService.ShowOkCancelDialog("You Have made changes. Navigare away?", "Question");  
                 if (result == MessageDialogResult.Cancel)
@@ -76,19 +80,20 @@ namespace Organizer.UI.ViewModel
                 }
 
             }
-            FriendDetailViewModel = _friendDetailViewModelCreator();
-            await FriendDetailViewModel.LoadAsync(friendId);
+            DetailViewModel = _detailViewModelCreator[args.ViewModelName];
+       
+            await DetailViewModel.LoadAsync(args.Id);
            
         }
 
-        private void AfterFriendDeleted(int friendId)
+        private void AfterDetailDeleted (AfterDetailDeletedEventArgs args)
         {
-            FriendDetailViewModel = null;
+            DetailViewModel = null;
         }
 
-        private void OnCreateNewFriendExecute()
+        private void OnCreateNewDetailExecute(Type viewModelType)
         {
-            OnOpenFriendDetailView(null);
+            OnOpenDetailView(new OpenDetailViewEventArgs { ViewModelName = viewModelType.Name });
         }
 
 

@@ -18,6 +18,8 @@ namespace Organizer.DataAccess
 
         public DbSet<Friend> Friends { get; set; }
         public DbSet<FavoriteMusicGenre> FavoriteMusicGenre { get; set; }
+        public DbSet<FriendPhoneNumber> FriendPhoneNumbers { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

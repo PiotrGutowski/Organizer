@@ -25,10 +25,12 @@ namespace Organizer.UI.Startup
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<OrganizerDbContext>().AsSelf();
             builder.RegisterType<FriendRepository>().As<IFriendRepository>();
-            builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
+            builder.RegisterType<FriendDetailViewModel>().Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
+            builder.RegisterType<MeetingDetailViewModel>().Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
 
             return builder.Build();
         }

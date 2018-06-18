@@ -60,6 +60,18 @@
     <Compile Include="Migrations\201806150803127_AddedMusicGenreFix.Designer.cs">
       <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806150952002_AddedPhone.cs" />
+    <Compile Include="Migrations\201806150952002_AddedPhone.Designer.cs">
+      <DependentUpon>201806150952002_AddedPhone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806171148307_AddedMeeting.cs" />
+    <Compile Include="Migrations\201806171148307_AddedMeeting.Designer.cs">
+      <DependentUpon>201806171148307_AddedMeeting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806171153489_AddedMeetingWithFriends.cs" />
+    <Compile Include="Migrations\201806171153489_AddedMeetingWithFriends.Designer.cs">
+      <DependentUpon>201806171153489_AddedMeetingWithFriends.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrganizerDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +95,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806150803127_AddedMusicGenreFix.resx">
       <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806150952002_AddedPhone.resx">
+      <DependentUpon>201806150952002_AddedPhone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806171148307_AddedMeeting.resx">
+      <DependentUpon>201806171148307_AddedMeeting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806171153489_AddedMeetingWithFriends.resx">
+      <DependentUpon>201806171153489_AddedMeetingWithFriends.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

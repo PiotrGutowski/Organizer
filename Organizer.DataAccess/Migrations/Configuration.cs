@@ -2,6 +2,7 @@ namespace Organizer.DataAccess.Migrations
 {
     using Organizer.Model;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -35,6 +36,23 @@ namespace Organizer.DataAccess.Migrations
                 new FavoriteMusicGenre { Name = "RAP" },
                 new FavoriteMusicGenre { Name = "Classic" }
                 );
+            context.SaveChanges();
+            context.FriendPhoneNumbers.AddOrUpdate(
+                p => p.Number,
+                new FriendPhoneNumber { Number = "555-555-555", FrinedId = context.Friends.FirstOrDefault().Id });
+
+            context.Meetings.AddOrUpdate(m => m.Title,
+        new Meeting
+        {
+            Title = "Watching Football",
+            DateFrom = new DateTime(2018, 5, 26),
+            DateTo = new DateTime(2018, 5, 26),
+            Friends = new List<Friend>
+          {
+            context.Friends.Single(f => f.FirstName == "Rocky" && f.LastName == "Balboa"),
+            context.Friends.Single(f => f.FirstName == "Capitan" && f.LastName == "Amercia")
+          }
+        });
 
         }
     }
