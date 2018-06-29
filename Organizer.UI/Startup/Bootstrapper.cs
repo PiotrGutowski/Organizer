@@ -27,10 +27,13 @@ namespace Organizer.UI.Startup
             builder.RegisterType<FriendRepository>().As<IFriendRepository>();
             builder.RegisterType<FriendDetailViewModel>().Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
             builder.RegisterType<MeetingDetailViewModel>().Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
+            builder.RegisterType<FavoriteMusicGenreDetailViewModel>().Keyed<IDetailViewModel>(nameof(FavoriteMusicGenreDetailViewModel));
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
             builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
+            builder.RegisterType<FavoriteMusicGenreRepository>().As<IFavoriteMusicGenreRepository>();
+
 
             return builder.Build();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Organizer.Model;
 
 namespace Organizer.UI.Data.Repositories
@@ -8,5 +9,6 @@ namespace Organizer.UI.Data.Repositories
     {
        
         void RemovePhoneNumber(FriendPhoneNumber model);
+        Task<bool> HasMeetingAsync(int friendId);
     }
 } 

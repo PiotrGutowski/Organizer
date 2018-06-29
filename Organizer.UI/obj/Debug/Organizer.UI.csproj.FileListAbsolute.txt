@@ -51,3 +51,11 @@ C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\ru\Xceed.Wpf.Avalo
 C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\MeetingDetailView.baml
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FavoriteMusicGenreView.g.cs
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\obj\Debug\View\FavoriteMusicGenreView.baml
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\ControlzEx.dll
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\MahApps.Metro.dll
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\ControlzEx.pdb
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\MahApps.Metro.pdb
+C:\Users\pigut2\source\repos\Organizer\Organizer.UI\bin\Debug\MahApps.Metro.xml

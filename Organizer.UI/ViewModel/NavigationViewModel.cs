@@ -64,9 +64,7 @@ namespace Organizer.UI.ViewModel
                     AfterDetailSaved(Meetings, args);
                     break;
             }
-           
-           
-        
+
         }
 
         private void AfterDetailSaved(ObservableCollection<NavigationItemViewModel> items,

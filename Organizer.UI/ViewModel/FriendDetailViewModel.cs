@@ -13,32 +13,43 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace Organizer.UI.ViewModel
 {
     public class FriendDetailViewModel : DetailViewModelBase, IFriendDetailViewModel
     {
         private readonly IFriendRepository _dataService;
-        private readonly IMessageDialogService _messageDialogService;
+
         private readonly IMusicGenreLookupDataService _musicGenreLookupDataService;
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
         private FriendWrapper _friend;
-        private bool _hasChanges;
 
         public FriendDetailViewModel(IFriendRepository dataService,
             IEventAggregator eventAggregator, IMessageDialogService messageDialogService,
             IMusicGenreLookupDataService musicGenreLookupDataService)
-            : base(eventAggregator)
+            : base(eventAggregator, messageDialogService)
         {
             _dataService = dataService;
-            _messageDialogService = messageDialogService;
+       
             _musicGenreLookupDataService = musicGenreLookupDataService;
+
+            eventAggregator.GetEvent<AfterCollectionSavedEvent>()
+                .Subscribe(AfterCollectionSaved);
 
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
 
             MusicGenre = new ObservableCollection<LookupItem>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
+        }
+
+        private async void AfterCollectionSaved(AfterCollectionSavedEventArgs args)
+        {
+            if(args.ViewModelName == nameof(FavoriteMusicGenreDetailViewModel))
+            {
+                await LodaMusicGenreAsync();
+            }
         }
 
         private void OnRemovePhoneNumberExecute()
@@ -65,11 +76,12 @@ namespace Organizer.UI.ViewModel
             return SelectedPhoneNumber != null;
         }
 
-        public override async Task LoadAsync(int? friendId)
+        public override async Task LoadAsync(int friendId)
         {
-            var friend = friendId.HasValue
-                 ? await _dataService.GetByIdAsync(friendId.Value) : CreateNewFriend();
+            var friend = friendId > 0
+                 ? await _dataService.GetByIdAsync(friendId) : CreateNewFriend();
 
+            Id = friendId;
             InitializeFriend(friend);
             InitializeFriendPhoneNumbers(friend.PhoneNumbers);
 
@@ -119,6 +131,11 @@ namespace Organizer.UI.ViewModel
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
+                if(e.PropertyName == nameof(Friend.FirstName) ||
+                    e.PropertyName == nameof(Friend.LastName))
+                {
+                    SetTitle();
+                }
             };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
@@ -126,6 +143,12 @@ namespace Organizer.UI.ViewModel
             {
                 Friend.FirstName = "";
             }
+            SetTitle();
+        }
+
+        private void SetTitle()
+        {
+            Title = $"{Friend.FirstName} {Friend.LastName}";
         }
 
         private async Task LodaMusicGenreAsync()
@@ -170,15 +193,22 @@ namespace Organizer.UI.ViewModel
 
         protected override bool OnSaveCanExecute()
         {
-            return Friend != null && !Friend.HasErrors && PhoneNumbers.All(p=>!p.HasErrors) && HasChanges;
+            return Friend != null 
+                && !Friend.HasErrors 
+                && PhoneNumbers.All(p=>!p.HasErrors) 
+                && HasChanges;
         }
 
         protected override async void OnSaveExecute()
         {
-            await _dataService.SaveAsync();
-            HasChanges = _dataService.HasChanges();
-            RaiseDetailSavedEvent(Friend.Id, $"{Friend.FirstName} {Friend.LastName}");
-           
+            await SaveWithOptimisticConcurrencyAsync(_dataService.SaveAsync,
+                () =>
+                {
+                    HasChanges = _dataService.HasChanges();
+                    Id = Friend.Id;
+                    RaiseDetailSavedEvent(Friend.Id, $"{Friend.FirstName} {Friend.LastName}");
+                });
+ 
         }
 
         private Friend CreateNewFriend()
@@ -190,7 +220,13 @@ namespace Organizer.UI.ViewModel
 
         protected override async void OnDeleteExecute()
         {
-            var result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete" +
+            if(await _dataService.HasMeetingAsync(Friend.Id))
+            {
+               await MessageDialogService.ShowInfoDialogAsync($"{Friend.FirstName} {Friend.LastName} can't be deleted, as this friend is part of at least one meeting");
+                return;
+            }
+
+            var result = await MessageDialogService.ShowOkCancelDialogAsync($"Do you really want to delete" +
                 $" {Friend.FirstName} {Friend.LastName}", "Question");
             if(result == MessageDialogResult.OK)
             {

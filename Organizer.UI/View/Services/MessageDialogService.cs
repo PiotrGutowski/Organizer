@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +11,24 @@ namespace Organizer.UI.View.Services
 {
     public class MessageDialogService : IMessageDialogService
     {
-        public MessageDialogResult ShowOkCancelDialog(string text, string title)
+        private MetroWindow MetroWindow { get { return (MetroWindow)App.Current.MainWindow; } }
+        public async Task<MessageDialogResult> ShowOkCancelDialogAsync(string text, string title)
         {
-            var result = MessageBox.Show(text, title, MessageBoxButton.OKCancel);
-            return result == MessageBoxResult.OK ?
+            var metroWindow = MetroWindow;
+           var result = await metroWindow.ShowMessageAsync(title, text, MessageDialogStyle.AffirmativeAndNegative);
+      
+            return result == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative ?
                 MessageDialogResult.OK : MessageDialogResult.Cancel;
+        }
+
+        public async Task ShowInfoDialogAsync(string text)
+        {
+           await MetroWindow.ShowMessageAsync("Info", text);
+           
         }
     }
        public  enum MessageDialogResult 
-        {
+       {
             OK,
             Cancel
         }

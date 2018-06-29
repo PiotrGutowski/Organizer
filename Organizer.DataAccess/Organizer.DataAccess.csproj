@@ -48,29 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Migrations\201806081830097_Initial.cs" />
-    <Compile Include="Migrations\201806081830097_Initial.Designer.cs">
-      <DependentUpon>201806081830097_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806181403573_Initial.cs" />
+    <Compile Include="Migrations\201806181403573_Initial.Designer.cs">
+      <DependentUpon>201806181403573_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806150800271_AddedMusicGenre.cs" />
-    <Compile Include="Migrations\201806150800271_AddedMusicGenre.Designer.cs">
-      <DependentUpon>201806150800271_AddedMusicGenre.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806150803127_AddedMusicGenreFix.cs" />
-    <Compile Include="Migrations\201806150803127_AddedMusicGenreFix.Designer.cs">
-      <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806150952002_AddedPhone.cs" />
-    <Compile Include="Migrations\201806150952002_AddedPhone.Designer.cs">
-      <DependentUpon>201806150952002_AddedPhone.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806171148307_AddedMeeting.cs" />
-    <Compile Include="Migrations\201806171148307_AddedMeeting.Designer.cs">
-      <DependentUpon>201806171148307_AddedMeeting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806171153489_AddedMeetingWithFriends.cs" />
-    <Compile Include="Migrations\201806171153489_AddedMeetingWithFriends.Designer.cs">
-      <DependentUpon>201806171153489_AddedMeetingWithFriends.cs</DependentUpon>
+    <Compile Include="Migrations\201806190723590_AddedRowVersion.cs" />
+    <Compile Include="Migrations\201806190723590_AddedRowVersion.Designer.cs">
+      <DependentUpon>201806190723590_AddedRowVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrganizerDbContext.cs" />
@@ -87,23 +71,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806081830097_Initial.resx">
-      <DependentUpon>201806081830097_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806181403573_Initial.resx">
+      <DependentUpon>201806181403573_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806150800271_AddedMusicGenre.resx">
-      <DependentUpon>201806150800271_AddedMusicGenre.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806150803127_AddedMusicGenreFix.resx">
-      <DependentUpon>201806150803127_AddedMusicGenreFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806150952002_AddedPhone.resx">
-      <DependentUpon>201806150952002_AddedPhone.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806171148307_AddedMeeting.resx">
-      <DependentUpon>201806171148307_AddedMeeting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806171153489_AddedMeetingWithFriends.resx">
-      <DependentUpon>201806171153489_AddedMeetingWithFriends.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806190723590_AddedRowVersion.resx">
+      <DependentUpon>201806190723590_AddedRowVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

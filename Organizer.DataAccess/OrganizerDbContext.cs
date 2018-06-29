@@ -11,7 +11,7 @@ namespace Organizer.DataAccess
 {
     public class OrganizerDbContext: DbContext
     {
-        public OrganizerDbContext(): base("FriendOrganizerDb")
+        public OrganizerDbContext(): base("Organizer")
         {
 
         }
